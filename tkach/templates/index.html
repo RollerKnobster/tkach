@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block title %}
+FMS — Welcome
+{% endblock %}
+
+{% block content %}
+    <article>
+        <header>
+            <h1>Welcome</h1>
+            <p>This is a web-service where you can solve flexible manufacturing systems problems.</p>
+        </header>
+        <section>
+            <h1>Your solved problem</h1>
+            {% if solution %}
+                <h2>Matrix</h2>
+                <table border="5px">
+                    <tr>
+                        <td width="40px" align="center"> </td>
+                        {% for element in solution[3] %}
+                            <td width="40px" align="center">{{ element }}</td>
+                        {% endfor %}
+                    </tr>
+                    {% for element in solution[0] %}
+                        <tr>
+                            <td width="40px" align="center">{{ element }}</td>
+                            {% for minielement in solution[0][element] %}
+                                <td width="40px" align="center">{{ minielement }}</td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </table>
+
+                <h2>Table</h2>
+                <table border="5px">
+                    <tr>
+                        <td width="40px" align="center"> </td>
+                        {% for element in solution[1] %}
+                            <td width="40px" align="center">{{ element }}</td>
+                        {% endfor %}
+                    </tr>
+                    {% for element in solution[1] %}
+                        <tr>
+                            <td width="40px" align="center">{{ element }}</td>
+                            {% for minielement in solution[1][element] %}
+                                <td width="40px" align="center">{{ minielement }}</td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </table>
+
+                <h2>Groups</h2>
+                {% for element in solution[2] %}
+                    <p>Group {{ element }}: {% for minielement in solution[2][element] %}{{ minielement }} {% endfor %}
+                    </p>
+                {% endfor %}
+
+                <h2>Detailed Groups</h2>
+                {% for element in solution[4] %}
+                    <p>Group {{ element }}: {% for minielement in solution[4][element] %}{{ minielement }} {% endfor %}
+                    </p>
+                {% endfor %}
+
+                <h2>Relation Matrices</h2>
+                {% for group in solution[4] %}
+                    <h3>Group {{ group }}</h3>
+                    <table border="5px">
+                    <tr>
+                        <td></td>
+                        {% for i in range(solution[6][group]|length) %}
+                            <td width="40px" align="center">{{ solution[6][group][i] }}</td>
+                        {% endfor %}
+                    </tr>
+                    {% for i in range(solution[6][group]|length) %}
+                        <tr>
+                        <td width="40px" align="center">{{ solution[6][group][i] }}</td>
+                        {% for element in solution[5][group][i] %}
+                            <td width="40px" align="center">{{ element }}</td>
+                        {% endfor %}
+                        </tr>
+                    {% endfor %}
+                    </table>
+                    <img src="static/graphs/graph_group_{{ group }}.png">
+                {% endfor %}
+            {% else %}
+                No input provided yet.
+            {% endif %}
+        </section>
+    </article>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% from "form_macros.html" import render_field %}
+
+{% block title %}
+    FMS -- Enter array
+{% endblock %}
+
+{% block content %}
+    <section>
+        <h1>Enter array</h1>
+        <form action="" method="post">
+            {{ form.hidden_tag() }}
+            <table>
+                {{ render_field(form.array, size=50) }}
+                <tr class="submit">
+                    <td></td>
+                    <td><button type="submit">Submit</button></td>
+                </tr>
+            </table>
+        </form>
+    </section>
+{% endblock %}
+
+{% block sidebar %}
+{% endblock %}
